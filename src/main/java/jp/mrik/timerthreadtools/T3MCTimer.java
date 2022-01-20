@@ -1,6 +1,7 @@
 package jp.mrik.timerthreadtools;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameRule;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -48,6 +49,13 @@ public class T3MCTimer {
         }
         return false;
     }
+
+    public void resetStart(){
+        Bukkit.getWorld(worldName).setTime(0);
+        Bukkit.getWorld(worldName).setGameRule(GameRule.DO_DAYLIGHT_CYCLE,true);
+        start();
+    }
+
 
     public void start(){
         if(isAsync){
@@ -100,6 +108,12 @@ public class T3MCTimer {
             runningTask.cancel();
             runningTask = null;
         }
+    }
+
+    public void worldCancel(){
+        cancel();
+        Bukkit.getWorld(worldName).setTime(0);
+        Bukkit.getWorld(worldName).setGameRule(GameRule.DO_DAYLIGHT_CYCLE,false);
     }
 
 }
